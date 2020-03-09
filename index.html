@@ -5,53 +5,71 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 </head>
-<body class="bg-secondary">
-
-	<!-- Website header -->
-	<div class="bg-dark py-3">
-		<h1 class="text-white display-2 text-center">Front end of server</h1>
-		<h2 class="text-muted text-center">Work Completed in Class 9/3/20</h2>
-		
-	</div> 
-	<!-- Header ends -->
-
-	<!-- Website contents -->
-	<div class="container shadow mb-5 bg-light">
-		<!-- Main button container -->
-		<div class="row">
-			<div class="col-12">
-				<button class="btn btn-lg btn-primary my-3" id="homeBtn" type="button">Home</button>
-				<button class="btn btn-lg btn-primary my-3" id="adminBtn" type="button">Admin</button>
+<body>
+	
+	<!-- Webpage starts -->
+	<div class="bg-secondary webpage-container">
+		<!-- Website header -->
+		<div class="bg-dark py-3">
+			<h1 class="text-white display-2 text-center">Front end of server</h1>
+			<h2 class="text-muted text-center">Work Completed in Class 9/3/20</h2>
+			
+		</div> 
+		<!-- Header ends -->
+	
+		<!-- Website contents -->
+		<div class="container shadow mb-5 bg-light">
+			<!-- Main button container -->
+			<div class="row">
+				<div class="col-12">
+					<button class="btn btn-lg btn-primary my-3" id="homeBtn" type="button">Home</button>
+					<button class="btn btn-lg btn-primary my-3" id="adminBtn" type="button">Admin</button>
+				</div>
+				<div id="homePage" class="col-12">
+					<h2>This is my Home page</h2>
+				</div>
+				<!-- Admin access container -->
+				<div id="adminPage" class="col-12">
+					<button class="btn btn-lg btn-primary my-3" id="loginBtn" type="button">login</button>
+					<button class="btn btn-lg btn-primary my-3" id="logoutBtn" type="button">logout</button>
+					<button class="btn btn-lg btn-primary my-3" id="registerBtn" type="button">register</button>
+					<button class="btn btn-lg btn-primary my-3" id="viewUserBtn" type="button">View User</button>
+				</div>
+				<!-- admin access ends -->
+			</div>		
+			<div id="printOut" class="row">
+				
 			</div>
-			<div id="homePage" class="col-12">
-				<h2>This is my Home page</h2>
-			</div>
-			<!-- Admin access container -->
-			<div id="adminPage" class="col-12">
-				<button class="btn btn-lg btn-primary my-3" id="loginBtn" type="button">login</button>
-				<button class="btn btn-lg btn-primary my-3" id="logoutBtn" type="button">logout</button>
-				<button class="btn btn-lg btn-primary my-3" id="registerBtn" type="button">register</button>
-				<button class="btn btn-lg btn-primary my-3" id="viewUserBtn" type="button">View User</button>
-			</div>
-			<!-- admin access ends -->
-		</div>		
-	</div>
-	<!-- Website contents end -->
-
-	<!-- Footer -->
-	<div class="bg-dark py-3">
-		<div class="row mx-0">
-			<!-- Link to author page -->
-			<div class="col-6">
-				<h2 class="small text-center text-white">Website created by <a href="pages/aboutAuthor.html" class="text-warning">Russell Johnson</a> as a part of Level 6 Web and Ux Design Course at Yoobee Colleges</h2>
-			</div>
-			<!-- Link to news api -->
-			<div class="col-6">
-				<h2 class="small text-right text-white">Website powered by <a href="https://newsapi.org/" class="text-warning" target="_blank">newsapi.org</a></h2>
+			<div id="loginFormContainer" class="row">
+				<form id="loginForm" class="col-12 py-2">
+					<label for="username" class="">Username:</label>
+					<input type="text" id="username" name="username" class="form-control" placeholder="username">
+					
+					<label for="password"> Password: </label>
+					<input type="password" name="password" id="password" class="form-control" placeholder="password">
+					
+					<button id="submit" name="button" type="submit" class="btn btn-lg btn-dark mt-4"> Submit </button>
+				</form>
 			</div>
 		</div>
+		<!-- Website contents end -->
+	
+		<!-- Footer -->
+		<div class="bg-dark py-3 fixed-to-bottom">
+			<div class="row mx-0">
+				<!-- Link to author page -->
+				<div class="col-6">
+					<h2 class="small text-center text-white">Website created by <a href="pages/aboutAuthor.html" class="text-warning">Russell Johnson</a> as a part of Level 6 Web and 	Ux Design Course at Yoobee Colleges</h2>
+				</div>
+				<!-- Link to news api -->
+				<div class="col-6">
+					<h2 class="small text-right text-white">Website powered by <a href="https://newsapi.org/" class="text-warning" target="_blank">newsapi.org</a></h2>
+				</div>
+			</div>
+		</div>
+	<!-- Footer ends -->	
 	</div>
-	<!-- Footer ends -->
+	<!-- Webpage ends -->
 
 	<!-- Imported JS -->
 	<script src="jquery/jquery.min.js"></script>

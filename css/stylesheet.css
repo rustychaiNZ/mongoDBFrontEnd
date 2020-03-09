@@ -1,3 +1,10 @@
-.container{
-	min-height: 90vh;
+/*.fixed-to-bottom{*/
+	/*position: absolute;*/
+	/*bottom: 0;*/
+	/*width: 100%;*/
+/*}*/
+
+.webpage-container{
+	min-height: 100vh;
+	position: relative;
 }
