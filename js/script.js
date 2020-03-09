@@ -11,9 +11,19 @@ function clearPrintOut(){
 	document.getElementById('printOut').innerHTML = '';
 }
 
+function clearFields(){
+	document.getElementById('newUserName').value = '';
+	document.getElementById('newEmail').value = '';
+	document.getElementById('newPassword').value = '';
+	document.getElementById('confirmNewPassword').value = '';
+}
+
 $('document').ready(function(){
+	
+	// All hidden sections on intial boot of page
 	$('#adminPage').hide();
 	$('#loginFormContainer').hide();
+	$('#registerNewUserContainer').hide();
 	
 	// Admin button function
 	$('#adminBtn').click(function(){
@@ -78,22 +88,8 @@ $('document').ready(function(){
 	// Register a new user form button
 	$('#registerBtn').click(function(){
 		clearPrintOut();
-		// Creates register new user form
-		document.getElementById('printOut').innerHTML +=
-			`<div class="col-12 py-2">
-				<form id="registerForm">
-					<label for="newUserName">User Name:</label>
-					<input name="newUserName" type="text" id="newUserName" class="form-control" placeholder="User name">
-					<label for="newEmail">Email Address:</label>
-					<input name="newEmail" type="text" id="newEmail" class="form-control" placeholder="Email Addrss">
-					<label for="newPassword">Password:</label>
-					<input name="newPassword" type="password" id="newPassword" class="form-control" placeholder="Password">
-					<label for="confirmNewPassword">Confirm Password:</label>
-					<input name="confirmNewPassword" type="password" id="confirmNewPassword" class="form-control" placeholder="confirm password">
+		$('#registerNewUserContainer').show();
 
-					<input id="registerNewUserBtn" name="registerNewUserBtn" type="submit" value="submit" class="btn btn-block btn-success my-3">
-				</form>
-			</div>`
 		// Form ends for registering a new user
 	});
 
@@ -110,24 +106,31 @@ $('document').ready(function(){
 		var confirmedPassword = document.getElementById('confirmNewPassword').value;
 
 		// Validates to make sure that the user has entered the right password
-		if(enteredPassowrd === confirmNewPassword){
-			password = confirmNewPassword;
-		} else{
+		if(enteredPassowrd !== confirmedPassword){
 			alert('Make sure passwords match');
+		} else{
+			password = confirmedPassword;
 		}
+
+		console.log(password);
 
 		$.ajax({
 			url : `${url}/registerUser`,
 			type : 'POST',
 			dataType : 'json',
-			data : $('#registerForm').serialize(),
+			data : {
+				username : username,
+				email : email ,
+				password : password
+			},
 			success : function(newUserForMongo){
-				// var user = {
-					// newUserForMongo.username = username;
-					// newUserForMongo.email = email;
-					// newUserForMongo.password = password;
-				// }
 				console.log(newUserForMongo);
+				document.getElementById('printOut').innerHTML += 
+					`<div class="col-12>
+						<h3>id:${newUserForMongo['_id']} Username: ${newUserForMongo['username']}</h3>
+					</div>`
+
+				clearFields();
 			},
 			error : function(){
 				alert('Something went wrong!');

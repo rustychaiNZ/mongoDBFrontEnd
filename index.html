@@ -37,9 +37,13 @@
 				</div>
 				<!-- admin access ends -->
 			</div>		
+			
+			<!-- Area for dynamic content to print to -->
 			<div id="printOut" class="row">
 				
 			</div>
+			
+			<!-- Login for exsisting users -->
 			<div id="loginFormContainer" class="row">
 				<form id="loginForm" class="col-12 py-2">
 					<label for="username" class="">Username:</label>
@@ -51,6 +55,26 @@
 					<button id="submit" name="button" type="submit" class="btn btn-lg btn-dark mt-4"> Submit </button>
 				</form>
 			</div>
+			<!-- Login ends -->
+
+			<!-- Register a new user -->
+			<div id="registerNewUserContainer" class="row">
+				<div class="col-12 py-2">
+					<form id="registerForm">
+						<label for="newUserName">User Name:</label>
+						<input name="newUserName" type="text" id="newUserName" class="form-control" placeholder="User name">
+						<label for="newEmail">Email Address:</label>
+						<input name="newEmail" type="text" id="newEmail" class="form-control" placeholder="Email Addrss">
+						<label for="newPassword">Password:</label>
+						<input name="newPassword" type="password" id="newPassword" class="form-control" placeholder="Password">
+						<label for="confirmNewPassword">Confirm Password:</label>
+						<input name="confirmNewPassword" type="password" id="confirmNewPassword" class="form-control" placeholder="confirm password">
+
+						<input id="registerNewUserBtn" name="registerNewUserBtn" type="submit" value="submit" class="btn btn-block btn-success my-3">
+					</form>
+				</div>
+			</div>
+
 		</div>
 		<!-- Website contents end -->
 	
