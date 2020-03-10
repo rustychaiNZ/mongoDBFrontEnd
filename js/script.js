@@ -9,13 +9,20 @@ let password;
 
 function clearPrintOut(){
 	document.getElementById('printOut').innerHTML = '';
+	$('#loginFormContainer').hide();
+	$('#registerNewUserContainer').hide();
 }
 
 function clearFields(){
+	// Register new user field
 	document.getElementById('newUserName').value = '';
 	document.getElementById('newEmail').value = '';
 	document.getElementById('newPassword').value = '';
 	document.getElementById('confirmNewPassword').value = '';
+
+	// Login field
+	document.getElementById('username').value = '';
+	document.getElementById('password').value = '';
 }
 
 $('document').ready(function(){
@@ -24,6 +31,7 @@ $('document').ready(function(){
 	$('#adminPage').hide();
 	$('#loginFormContainer').hide();
 	$('#registerNewUserContainer').hide();
+	$('#productManipulationContainer').hide();
 	
 	// Admin button function
 	$('#adminBtn').click(function(){
@@ -67,6 +75,8 @@ $('document').ready(function(){
 					`<div class="col-6 d-flex align-self-stretch py-3"> 
 						<div class="card" style="width: 100%;">
 							<div class="card-body">
+								<h3>User ID:</h3>
+								<p>${usersFromMongo[i]._id}</p>
 								<h3>User Name:</h3>
 								<p>${usersFromMongo[i].username}</p>
 								<h3>Email:</h3>
@@ -170,11 +180,99 @@ $('document').ready(function(){
 					sessionStorage.setItem('userName', loginData['username']);
 					sessionStorage.setItem('email', loginData['email']);
 					console.log(sessionStorage);
+
+					clearFields();
+					alert('log in success');
 				}
 
 			}, // success
 			error : function(){
 				console.log('an error has occured');
+			}
+		});
+	});
+
+	// Logout of account
+	$('#logoutBtn').click(function(){
+		sessionStorage.clear();
+		console.log(sessionStorage);
+		alert('Successfully loged out');
+	});
+
+	// Checks to see if someone is logged in
+	if(sessionStorage['userName']){
+		console.log('You are logged in');
+	} else{
+		console.log('Please log in');
+	}
+
+	// Products button press
+	$('#productsBtn').click(function(){
+		clearPrintOut();
+		$('#productManipulationContainer').toggle();
+	});
+
+	// Add a new product
+	$('#addProduct').click(function(){
+		$('#deleteProduct').hide();
+		$('#updateProduct').hide();
+	});
+
+	// Add a product
+	$('#productManipulationForm').submit(function(){
+		event.preventDefault();
+ 
+		let productId = $('#productid').val();
+		let productName = $('#productName').val();
+		let productPrice = $('#productPrice').val();
+		let userId = $('#userid').val();
+
+		console.log(productId, productName, productPrice, userId);
+ 
+		$.ajax({
+			url : `${url}/addProduct`,
+			type : 'POST',
+			data : {
+				productID : productId , 
+				name : productName ,
+				price : productPrice , 
+				userId : userId
+			},
+			success : function(data){
+
+			}, 
+			error : function(){
+				alert('error: ')
+			}
+		});
+	});
+
+	// Modify a product
+	$('#productManipulationForm').submit(function(){
+		event.preventDefault();
+
+		let productId = $('#productid').val();
+		let productName = $('#productName').val();
+		let productPrice = $('#productPrice').val();
+		let productQuantity = $('#')
+		let userId = $('#userid').val();
+
+		console.log(productId, productName, productPrice, userId);
+
+		$.ajax({
+			url : `${url}/updateProduct/${productId}`,
+			type : 'PATCH',
+			data : {
+				name : productName ,
+				price : productPrice , 
+				userId : userId
+			},
+			success : function(data){
+				console.log(data);
+				alert(data['name']);
+			}, 
+			error : function(){
+				alert('error: ')
 			}
 		});
 	});

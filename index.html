@@ -34,6 +34,7 @@
 					<button class="btn btn-lg btn-primary my-3" id="logoutBtn" type="button">logout</button>
 					<button class="btn btn-lg btn-primary my-3" id="registerBtn" type="button">register</button>
 					<button class="btn btn-lg btn-primary my-3" id="viewUserBtn" type="button">View User</button>
+					<button class="btn btn-lg btn-primary my-3" id="productsBtn" type="button">Products</button>
 				</div>
 				<!-- admin access ends -->
 			</div>		
@@ -74,6 +75,35 @@
 					</form>
 				</div>
 			</div>
+			<!-- Register new user end -->
+
+			<!-- Product manipulation -->
+			<div id="productManipulationContainer" class="row">
+				<!-- Button container -->
+				<div id="manipulateProduct" class="col-12 p-3">
+					<button id="addProduct" name="addProduct" type="submit" class="btn btn-lg btn-primary">Add</button>
+					<button id="deleteProduct" name="deleteProduct" type="submit" class="btn btn-lg btn-primary">Delete</button>
+					<button id="updateProduct" name="updateProduct" type="submit" class="btn btn-lg btn-primary">Update</button>
+				</div>
+				<!-- Button container end -->
+
+				<!-- Form container -->
+				<div class="col-12 py-2">
+					<form id="productManipulationForm">
+						<label for="productid">Product ID:</label>
+						<input type="text" name="productid" id="productid" class="form-control" placeholder="id">
+						<label for="productName">Product Name:</label>
+						<input type="text" name="productName" id="productName" class="form-control" placeholder="Product name">
+						<label for="productPrice">Product Price:</label>
+						<input type="number" name="productPrice" id="productPrice" class="form-control" placeholder="Price (don't add $)">
+						<label for="userid">User ID:</label>
+						<input type="text" name="userid" id="userid" class="form-control" placeholder="id">
+
+						<button id="submitProduct" name="submitAddProduct" type="submit" class="btn btn-lg btn-block btn-dark mt-3">Submit</button>
+					</form>
+				</div>
+			</div>
+			<!-- Product manipulation -->
 
 		</div>
 		<!-- Website contents end -->
