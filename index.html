@@ -38,12 +38,7 @@
 				</div>
 				<!-- admin access ends -->
 			</div>		
-			
-			<!-- Area for dynamic content to print to -->
-			<div id="printOut" class="row">
-				
-			</div>
-			
+
 			<!-- Login for exsisting users -->
 			<div id="loginFormContainer" class="row">
 				<form id="loginForm" class="col-12 py-2">
@@ -84,26 +79,54 @@
 					<button id="addProduct" name="addProduct" type="submit" class="btn btn-lg btn-primary">Add</button>
 					<button id="deleteProduct" name="deleteProduct" type="submit" class="btn btn-lg btn-primary">Delete</button>
 					<button id="updateProduct" name="updateProduct" type="submit" class="btn btn-lg btn-primary">Update</button>
+					<button id="viewProduct" name="viewProduct" type="submit" class="btn btn-lg btn-primary">View All</button>
 				</div>
 				<!-- Button container end -->
 
 				<!-- Form container -->
 				<div class="col-12 py-2">
+					<!-- Add product form -->
+					<form id="addProductForm">
+						<label for="addProductName">Product Name:</label>
+						<input type="text" name="addProductName" id="addProductName" class="form-control" placeholder="Product name">
+						<label for="addProductPrice">Product Price:</label>
+						<input type="number" name="addProductPrice" id="addProductPrice" class="form-control" placeholder="Price (don't add $)" step=".01">
+						<label for="addProductQuantity">Product Quantity:</label>
+						<input type="number" name="addProductQuantity" id="addProductQuantity" class="form-control" placeholder="Quantity">
+						<!-- <label for="userid">User ID:</label> -->
+						<!-- <input type="text" name="userid" id="userid" class="form-control" placeholder="id"> -->
+
+						<button id="submitAddProduct" name="submitAddProduct" type="submit" class="btn btn-lg btn-block btn-dark mt-3">Submit</button>
+					</form>
+
+					<!-- Delete product form -->
+					<div id="deleteProductForm" class="col-12 py-2">
+						
+					</div>
+
+					<!-- update a product -->
 					<form id="productManipulationForm">
 						<label for="productid">Product ID:</label>
 						<input type="text" name="productid" id="productid" class="form-control" placeholder="id">
 						<label for="productName">Product Name:</label>
 						<input type="text" name="productName" id="productName" class="form-control" placeholder="Product name">
 						<label for="productPrice">Product Price:</label>
-						<input type="number" name="productPrice" id="productPrice" class="form-control" placeholder="Price (don't add $)">
+						<input type="number" name="productPrice" id="productPrice" class="form-control" placeholder="Price (don't add $)" step=".01">
+						<label for="productQuantity">Product Quantity:</label>
+						<input type="number" name="productQuantity" id="productQuantity" class="form-control" placeholder="Quantity">
 						<label for="userid">User ID:</label>
 						<input type="text" name="userid" id="userid" class="form-control" placeholder="id">
 
-						<button id="submitProduct" name="submitAddProduct" type="submit" class="btn btn-lg btn-block btn-dark mt-3">Submit</button>
+						<button id="submitUpdate" name="submitUpdate" type="submit" class="btn btn-lg btn-block btn-dark mt-3">Submit</button>
 					</form>
 				</div>
 			</div>
 			<!-- Product manipulation -->
+
+			<!-- Area for dynamic content to print to -->
+			<div id="printOut" class="row">
+				
+			</div>
 
 		</div>
 		<!-- Website contents end -->

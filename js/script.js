@@ -34,6 +34,8 @@ $('document').ready(function(){
 	$('#loginFormContainer').hide();
 	$('#registerNewUserContainer').hide();
 	$('#productManipulationContainer').hide();
+	$('#addProductForm').hide();
+	$('#productManipulationForm').hide();
 	
 	// Admin button function
 	$('#adminBtn').click(function(){
@@ -184,7 +186,6 @@ $('document').ready(function(){
 				password : password
 			},
 			success : function(loginData){
-				console.log(loginData);
 				
 				if(loginData === 'User is not found. Please register'){
 					alert('Please register an account with us');
@@ -220,29 +221,30 @@ $('document').ready(function(){
 
 	// Add a new product
 	$('#addProduct').click(function(){
-		$('#deleteProduct').hide();
-		$('#updateProduct').hide();
+		clearPrintOut();
+		$('#productManipulationForm').hide();
+		$('#addProductForm').show();
 	});
 
 	// Add a product
-	$('#productManipulationForm').submit(function(){
+	$('#addProductForm').submit(function(){
 		event.preventDefault();
- 
-		let productId = $('#productid').val();
-		let productName = $('#productName').val();
-		let productPrice = $('#productPrice').val();
-		let userId = $('#userid').val();
+ 		
+ 		let productName = $('#addProductName').val();
+		let productPrice = $('#addProductPrice').val();
+		let productQuantity = $('#addProductQuantity').val();
+		let userId = sessionStorage.getItem('userId');
 
-		console.log(productId, productName, productPrice, userId);
+		console.log(productName, productPrice, userId);
  
 		$.ajax({
 			url : `${url}/addProduct`,
 			type : 'POST',
-			data : {
-				productID : productId , 
-				name : productName ,
+			data : { 
+				productName : productName ,
+				quantity : productQuantity ,
 				price : productPrice , 
-				userId : userId
+				user_id : userId
 			},
 			success : function(data){
 
@@ -253,6 +255,74 @@ $('document').ready(function(){
 		});
 	});
 
+	// Delte product button press
+	$('#deleteProduct').click(function(){
+		clearPrintOut();
+		$('#productManipulationForm').hide();
+		$('#addProductForm').hide();
+
+		// Dynamically creates list of products from data base
+		$.ajax({
+			url : `${url}/viewProducts`,
+			type : 'GET',
+			dataType : 'json',
+			success : function(productsFromMongo){
+				console.log(productsFromMongo);
+				for(var i = 0; i < productsFromMongo.length; i++){
+					document.getElementById('printOut').innerHTML += 
+					`<div class="col-6 d-flex align-self-stretch py-3"> 
+						<div class="card" style="width: 100%;">
+							<div class="card-body">
+								<h3>Product ID:</h3>
+								<p>${productsFromMongo[i]._id}</p>
+								<h3>Product Name:</h3>
+								<p class="product-name">${productsFromMongo[i].productName}</p>
+							</div>
+							<div class="card-footer">
+								<button id="${productsFromMongo[i]._id}" class="btn btn-danger delete-product">Delete</button>
+							</div>
+						</div>
+					</div>`;
+					deleteProductButtonClick();
+				}
+			}, // success
+			error : function(){
+				console.log('error: cannot call api');
+			} // error
+		});
+	});
+
+	// When clicking delete on card in delete product section
+	function deleteProductButtonClick(){
+		$('.delete-product').on('click', function(){
+			console.log('success');
+	
+			let productToDeleteId = this.id;
+			let productToDeleteName = document.getElementsByClassName('product-name');
+	
+			if(this.id === productToDeleteId){
+				console.log(`Deleted ${productToDeleteName}`);
+				$.ajax({
+					url : `${url}/deleteProduct/${productToDeleteId}`,
+					type : 'DELETE',
+					dataType : 'json',
+					success : function(){
+						alert(`${productToDeleteName} has been deleted`)
+					}, // success
+					error : function(){
+						console.log('error: cannot call api');
+					} // error
+				});
+			}
+		});
+	}
+
+	// Update product button press
+	$('#updateProduct').click(function(){
+		$('#addProductForm').hide();
+		$('#productManipulationForm').show();
+	});
+
 	// Modify a product
 	$('#productManipulationForm').submit(function(){
 		event.preventDefault();
@@ -260,26 +330,65 @@ $('document').ready(function(){
 		let productId = $('#productid').val();
 		let productName = $('#productName').val();
 		let productPrice = $('#productPrice').val();
-		let productQuantity = $('#')
+		let productQuantity = $('#productQuantity').val();
 		let userId = $('#userid').val();
 
-		console.log(productId, productName, productPrice, userId);
+		console.log(productId, productName, productPrice, productQuantity, userId);
 
 		$.ajax({
 			url : `${url}/updateProduct/${productId}`,
 			type : 'PATCH',
 			data : {
-				name : productName ,
-				price : productPrice , 
+				name : productName,
+				quantity : productQuantity,
+				price : productPrice,
 				userId : userId
 			},
 			success : function(data){
 				console.log(data);
-				alert(data['name']);
 			}, 
 			error : function(){
 				alert('error: ')
 			}
+		});
+	});
+
+	// View all products button press
+	$('#viewProduct').click(function(){
+		$('#addProductForm').hide();
+		$('#productManipulationForm').hide();
+		clearPrintOut();
+
+		// Adding a new product to database
+		$.ajax({
+			url : `${url}/viewProducts`,
+			type : 'GET',
+			dataType : 'json',
+			success : function(productsFromMongo){
+				console.log(productsFromMongo);
+				for(var i = 0; i < productsFromMongo.length; i++){
+					document.getElementById('printOut').innerHTML += 
+					`<div class="col-6 d-flex align-self-stretch py-3"> 
+						<div class="card" style="width: 100%;">
+							<div class="card-body">
+								<h3>Product ID:</h3>
+								<p>${productsFromMongo[i]._id}</p>
+								<h3>Product Name:</h3>
+								<p>${productsFromMongo[i].productName}</p>
+								<h3># of product</h3>
+								<p>${productsFromMongo[i].quantity}</p>
+								<h3>Price of product</h3>
+								<p>${productsFromMongo[i].price}</p>
+								<h3>User in charge ID:</h3>
+								<p>${productsFromMongo[i].user_id}</p>
+							</div>
+						</div>
+					</div>`
+				}
+			}, // success
+			error : function(){
+				console.log('error: cannot call api');
+			} // error
 		});
 	});
 
