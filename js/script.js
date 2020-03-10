@@ -3,9 +3,11 @@ console.log('front end for mongodbIntroduction');
 let url;
 
 // Register form variables
-let username;
-let email;
-let password;
+let username = '';
+let email = '';
+let password = '';
+let enteredPassowrd = '';
+let confirmedPassword = '';
 
 function clearPrintOut(){
 	document.getElementById('printOut').innerHTML = '';
@@ -45,6 +47,13 @@ $('document').ready(function(){
 		$('#adminPage').hide();
 	});
 
+	// Checks to see if someone is logged in
+	if(sessionStorage.setItem['userName']){
+		console.log('You are logged in');
+	} else{
+		console.log('Please log in');
+	}
+
 	// Get url and prot from config.json
 	$.ajax({
 		url : 'js/config.json',
@@ -63,6 +72,7 @@ $('document').ready(function(){
 	// Get all users from back end of server
 	$('#viewUserBtn').click(function(){
 		clearPrintOut();
+		$('#productManipulationContainer').hide();
 		console.log('clicked!');
 		$.ajax({
 			url : `${url}/allUsers`,
@@ -99,6 +109,7 @@ $('document').ready(function(){
 	$('#registerBtn').click(function(){
 		clearPrintOut();
 		$('#registerNewUserContainer').show();
+		$('#productManipulationContainer').hide();
 
 		// Form ends for registering a new user
 	});
@@ -112,40 +123,41 @@ $('document').ready(function(){
 		username = document.getElementById('newUserName').value;
 		email = document.getElementById('newEmail').value;
 
-		var enteredPassowrd = document.getElementById('newPassword').value;
-		var confirmedPassword = document.getElementById('confirmNewPassword').value;
+		enteredPassowrd = document.getElementById('newPassword').value;
+		confirmedPassword = document.getElementById('confirmNewPassword').value;
 
 		// Validates to make sure that the user has entered the right password
 		if(enteredPassowrd !== confirmedPassword){
 			alert('Make sure passwords match');
 		} else{
+
 			password = confirmedPassword;
-		}
 
-		console.log(password);
-
-		$.ajax({
-			url : `${url}/registerUser`,
-			type : 'POST',
-			dataType : 'json',
-			data : {
-				username : username,
-				email : email ,
-				password : password
-			},
-			success : function(newUserForMongo){
-				console.log(newUserForMongo);
-				document.getElementById('printOut').innerHTML += 
-					`<div class="col-12>
-						<h3>id:${newUserForMongo['_id']} Username: ${newUserForMongo['username']}</h3>
-					</div>`
-
-				clearFields();
-			},
-			error : function(){
-				alert('Something went wrong!');
+			// Conditional statement that ensures that the user has filled out all of the fields
+			if((username !== '') && (email !== '') && (password !== '')){
+			
+				// Ajax will only post new user to DB if validated
+				$.ajax({
+					url : `${url}/registerUser`,
+					type : 'POST',
+					dataType : 'json',
+					data : {
+						username : username,
+						email : email ,
+						password : password
+					},
+					success : function(newUserForMongo){
+						console.log(newUserForMongo);	
+						clearFields();
+					},
+					error : function(newUserForMongo){
+						console.log('Already an exsisting member');
+					}
+				});
+			} else{
+				alert('Fillout all fields');
 			}
-		});
+		}
 	});
 	// Register new user button ends
 
@@ -153,6 +165,7 @@ $('document').ready(function(){
 	$('#loginBtn').click(function(){
 		clearPrintOut();
 		$('#loginFormContainer').toggle();
+		$('#productManipulationContainer').hide();
 	});
 
 	// Login to an exsisting user on button click
@@ -198,13 +211,6 @@ $('document').ready(function(){
 		console.log(sessionStorage);
 		alert('Successfully loged out');
 	});
-
-	// Checks to see if someone is logged in
-	if(sessionStorage['userName']){
-		console.log('You are logged in');
-	} else{
-		console.log('Please log in');
-	}
 
 	// Products button press
 	$('#productsBtn').click(function(){
