@@ -27,8 +27,22 @@ function clearFields(){
 	document.getElementById('password').value = '';
 }
 
+// Hide buttons other than login in on start up
+function hideAllBtnFunction(){
+	$('#logoutBtn').hide();
+	$('#viewUserBtn').hide();
+	$('#productsBtn').hide();
+}
+
+// Show admin buttons
+function showAllBtnFunction(){
+	$('#logoutBtn').show();
+	$('#viewUserBtn').show();
+	$('#productsBtn').show();
+}
+
 $('document').ready(function(){
-	
+
 	// All hidden sections on intial boot of page
 	$('#adminPage').hide();
 	$('#loginFormContainer').hide();
@@ -36,6 +50,7 @@ $('document').ready(function(){
 	$('#productManipulationContainer').hide();
 	$('#addProductForm').hide();
 	$('#productManipulationForm').hide();
+	hideAllBtnFunction();
 	
 	// Admin button function
 	$('#adminBtn').click(function(){
@@ -52,6 +67,7 @@ $('document').ready(function(){
 	// Checks to see if someone is logged in
 	if(sessionStorage.setItem['userName']){
 		console.log('You are logged in');
+
 	} else{
 		console.log('Please log in');
 	}
@@ -112,7 +128,6 @@ $('document').ready(function(){
 		clearPrintOut();
 		$('#registerNewUserContainer').show();
 		$('#productManipulationContainer').hide();
-
 		// Form ends for registering a new user
 	});
 
@@ -197,6 +212,7 @@ $('document').ready(function(){
 
 					clearFields();
 					alert('log in success');
+					showAllBtnFunction();
 				}
 
 			}, // success
@@ -211,6 +227,9 @@ $('document').ready(function(){
 		sessionStorage.clear();
 		console.log(sessionStorage);
 		alert('Successfully loged out');
+		hideAllBtnFunction();
+		$('#productManipulationContainer').hide();
+		clearPrintOut();
 	});
 
 	// Products button press
