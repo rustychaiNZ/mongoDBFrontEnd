@@ -25,6 +25,11 @@ function clearFields(){
 	// Login field
 	document.getElementById('username').value = '';
 	document.getElementById('password').value = '';
+
+	// Add product
+	document.getElementById('addProductName').value = '';
+	document.getElementById('addProductPrice').value = '';
+	document.getElementById('addProductQuantity').value = '';
 }
 
 // Hide buttons other than login in on start up
@@ -204,6 +209,8 @@ $('document').ready(function(){
 				
 				if(loginData === 'User is not found. Please register'){
 					alert('Please register an account with us');
+				} else if(loginData === 'not authorized'){
+					alert('Incorrect user name or password');
 				} else{
 					sessionStorage.setItem('userId', loginData['_id']);
 					sessionStorage.setItem('userName', loginData['username']);
@@ -266,7 +273,7 @@ $('document').ready(function(){
 				user_id : userId
 			},
 			success : function(data){
-
+				clearFields();
 			}, 
 			error : function(){
 				alert('error: ')
